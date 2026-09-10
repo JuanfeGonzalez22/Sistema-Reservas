@@ -5,16 +5,20 @@ public class Usuario {
     private Long id;
     private String email;
     private String password;
+    private Rol rol;
     private String nombre;
+    private boolean activo;
 
     public Usuario() {
     }
 
-    public Usuario(Long id, String email, String password, String nombre) {
+    public Usuario(Long id, String email, String password, Rol rol, String nombre) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.rol = rol;
         this.nombre = nombre;
+        this.activo = true;
     }
 
     public Long getId() {
@@ -47,5 +51,21 @@ public class Usuario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }

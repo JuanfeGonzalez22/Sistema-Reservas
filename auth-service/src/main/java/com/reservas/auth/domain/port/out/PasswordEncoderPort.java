@@ -1,6 +1,6 @@
 package com.reservas.auth.domain.port.out;
 
-public interface PasswordEncodePort {
+public interface PasswordEncoderPort {
 
     String encriptar(String passwordPlano);
 

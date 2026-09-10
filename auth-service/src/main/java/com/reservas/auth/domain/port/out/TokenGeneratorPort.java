@@ -6,6 +6,7 @@ public interface TokenGeneratorPort {
 
      String generarToken(Usuario usuario);
      String extraerEmail(String token);
+     String extraerRol(String token);
      boolean esValido(String token);
 
 }

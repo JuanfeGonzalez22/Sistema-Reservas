@@ -32,6 +32,7 @@ public class JwtService implements TokenGeneratorPort {
         return Jwts.builder()
                 .subject(usuario.getEmail())
                 .claim("id", usuario.getId())
+                .claim("rol", usuario.getRol().name())
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(getKey())
@@ -46,6 +47,16 @@ public class JwtService implements TokenGeneratorPort {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    @Override
+    public String extraerRol(String token) {
+        return Jwts.parser()
+                .verifyWith(getKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("rol", String.class);
     }
 
     @Override
