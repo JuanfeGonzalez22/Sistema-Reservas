@@ -8,4 +8,6 @@ public interface AuthUseCase {
     ResultadoAutenticacion registrarUsuario(String email, String passwordPlano, String nombre);
 
     ResultadoAutenticacion autenticarUsuario(String email, String passwordPlano);
+
+    Usuario registrarUsuarioPorRol(String email, String passwordPlano, String nombre, String rol);
 }

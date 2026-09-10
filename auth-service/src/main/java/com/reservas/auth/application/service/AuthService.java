@@ -7,7 +7,9 @@ import com.reservas.auth.domain.port.in.AuthUseCase;
 import com.reservas.auth.domain.port.out.PasswordEncoderPort;
 import com.reservas.auth.domain.port.out.TokenGeneratorPort;
 import com.reservas.auth.domain.port.out.UsuarioRepositoryPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AuthService implements AuthUseCase {
 
     private final UsuarioRepositoryPort usuarioRepositoryPort;
@@ -41,5 +43,17 @@ public class AuthService implements AuthUseCase {
        }
        String token = tokenGeneratorPort.generarToken(usuario);
        return new ResultadoAutenticacion(usuario, token);
+    }
+
+    @Override
+    public Usuario registrarUsuarioPorRol(String email, String passwordPlano, String nombre, String rol) {
+        if(usuarioRepositoryPort.existePorEmail(email)) {
+            throw new IllegalArgumentException("Usuario existente");
+        }
+
+        Rol rolUsuario = Rol.valueOf(rol.toUpperCase());
+        String password = passwordEncoderPort.encriptar(passwordPlano);
+        Usuario usuario = new Usuario(null, email, password, rolUsuario, nombre);
+        return usuarioRepositoryPort.guardar(usuario);
     }
 }
