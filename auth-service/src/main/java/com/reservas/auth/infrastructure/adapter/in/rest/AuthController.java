@@ -29,9 +29,9 @@ public class AuthController {
         return ResponseEntity.ok(new AuthDtos.TokenResponse(resultado.getToken(), usuario.getEmail(), usuario.getId(), usuario.getRol().name()));
     }
 
-    @PostMapping("/admin/regitrar")
-    public ResponseEntity<Void> registrarPorRol(@Valid @RequestBody AuthDtos.RegistroRequest request){
-        authUseCase.registrarUsuario(request.email(), request.password(), request.nombre());
+    @PostMapping("/admin/registrar")
+    public ResponseEntity<Void> registrarPorRol(@Valid @RequestBody AuthDtos.RegistroConRolResponse request){
+        authUseCase.registrarUsuarioPorRol(request.email(), request.password(), request.nombre(), request.rol().name());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
