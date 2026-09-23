@@ -3,7 +3,9 @@ package com.reservas.usuarios.application.service;
 import com.reservas.usuarios.domain.model.Profesional;
 import com.reservas.usuarios.domain.port.in.ProfesionalUseCase;
 import com.reservas.usuarios.domain.port.out.ProfesionalRepositoryPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProfesionalService  implements ProfesionalUseCase {
 
     private final ProfesionalRepositoryPort profesionalRepositoryPort;

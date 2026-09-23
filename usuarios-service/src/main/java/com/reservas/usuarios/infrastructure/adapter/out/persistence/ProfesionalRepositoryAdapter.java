@@ -2,9 +2,11 @@ package com.reservas.usuarios.infrastructure.adapter.out.persistence;
 
 import com.reservas.usuarios.domain.model.Profesional;
 import com.reservas.usuarios.domain.port.out.ProfesionalRepositoryPort;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class ProfesionalRepositoryAdapter implements ProfesionalRepositoryPort {
 
     private ProfesionalJpaRepository profesionalJpaRepository;

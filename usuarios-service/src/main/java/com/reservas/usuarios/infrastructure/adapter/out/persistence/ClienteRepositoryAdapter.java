@@ -2,9 +2,11 @@ package com.reservas.usuarios.infrastructure.adapter.out.persistence;
 
 import com.reservas.usuarios.domain.model.Cliente;
 import com.reservas.usuarios.domain.port.out.ClienteRepositoryPort;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Component
 public class ClienteRepositoryAdapter implements ClienteRepositoryPort {
 
     private ClienteJpaRepository clienteJpaRepository;

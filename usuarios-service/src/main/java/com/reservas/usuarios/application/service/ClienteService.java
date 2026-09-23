@@ -3,7 +3,9 @@ package com.reservas.usuarios.application.service;
 import com.reservas.usuarios.domain.model.Cliente;
 import com.reservas.usuarios.domain.port.in.ClienteUseCase;
 import com.reservas.usuarios.domain.port.out.ClienteRepositoryPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ClienteService implements ClienteUseCase {
 
     private final ClienteRepositoryPort clienteRepositoryPort;
