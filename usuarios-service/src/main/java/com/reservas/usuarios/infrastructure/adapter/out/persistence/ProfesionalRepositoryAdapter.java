@@ -18,7 +18,7 @@ public class ProfesionalRepositoryAdapter implements ProfesionalRepositoryPort {
 
     @Override
     public Profesional guardar(Profesional profesional) {
-        ProfesionalEntity entity = profesionalJpaRepository.findByUsuarioID(profesional.getUsuarioId())
+        ProfesionalEntity entity = profesionalJpaRepository.findByUsuarioId(profesional.getUsuarioId())
                 .map(existing -> {
                     existing.setEspecialidad(profesional.getEspecialidad());
                     existing.setHorarioTrabajo(profesional.getHorarioTrabajo());
@@ -31,12 +31,12 @@ public class ProfesionalRepositoryAdapter implements ProfesionalRepositoryPort {
 
     @Override
     public Optional<Profesional> buscarPorId(Long usuarioId) {
-        return profesionalJpaRepository.findByUsuarioID(usuarioId).map(this::toDomain);
+        return profesionalJpaRepository.findByUsuarioId(usuarioId).map(this::toDomain);
     }
 
     @Override
     public boolean existePorId(Long usuarioId) {
-        return profesionalJpaRepository.existsByUsuarioID(usuarioId);
+        return profesionalJpaRepository.existsByUsuarioId(usuarioId);
     }
 
     private Profesional toDomain(ProfesionalEntity entity) {

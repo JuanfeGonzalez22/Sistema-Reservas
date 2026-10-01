@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface ProfesionalJpaRepository extends JpaRepository<ProfesionalEntity, Long> {
 
-    Optional<ProfesionalEntity> findByUsuarioID(Long usuarioID);
-    boolean existsByUsuarioID(Long usuarioID);
+    Optional<ProfesionalEntity> findByUsuarioId(Long usuarioId);
+    boolean existsByUsuarioId(Long usuarioId);
 }

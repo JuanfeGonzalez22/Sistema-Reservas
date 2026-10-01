@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/profesionales")
 public class ProfesionalController {
 
     private final ProfesionalUseCase profesionalUseCase;
@@ -33,7 +33,7 @@ public class ProfesionalController {
         return ResponseEntity.ok(toResponse(profesional));
     }
 
-    @GetMapping("/me")
+    @PutMapping("/me")
     public ResponseEntity<ProfesionalDTO.ProfesionalPerfilResponse> actualizarPerfil(@Valid @RequestBody ProfesionalDTO.ProfesionalPerfilRequest request, @AuthenticationPrincipal Jwt jwt){
         Long usuarioId = jwt.getClaim("id");
         Profesional profesional = profesionalUseCase.actualizarPerfil(usuarioId, request.especialidad(),  request.horarioTrabajo());

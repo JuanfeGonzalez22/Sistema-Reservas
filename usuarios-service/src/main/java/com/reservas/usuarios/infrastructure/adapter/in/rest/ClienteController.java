@@ -33,7 +33,7 @@ public class ClienteController {
         return ResponseEntity.ok(toResponse(cliente));
     }
 
-    @GetMapping("/me")
+    @PutMapping("/me")
     public ResponseEntity<ClienteDTO.ClientePerfilResponse> actualizarPerfil(@Valid @RequestBody ClienteDTO.ClientePerfilRequest request, @AuthenticationPrincipal Jwt jwt){
         Long usuarioId = jwt.getClaim("id");
         Cliente cliente = clienteUseCase.actualizarPerfil(usuarioId, request.telefono(), request.direccion());
