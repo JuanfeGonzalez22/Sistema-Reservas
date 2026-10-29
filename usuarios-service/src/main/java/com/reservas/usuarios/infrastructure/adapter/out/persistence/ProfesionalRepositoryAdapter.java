@@ -22,9 +22,10 @@ public class ProfesionalRepositoryAdapter implements ProfesionalRepositoryPort {
                 .map(existing -> {
                     existing.setEspecialidad(profesional.getEspecialidad());
                     existing.setHorarioTrabajo(profesional.getHorarioTrabajo());
+                    existing.setTarifa(profesional.getTarifa());
                     return existing;
                 })
-                .orElse(new ProfesionalEntity(null, profesional.getUsuarioId(), profesional.getEspecialidad(),  profesional.getHorarioTrabajo()));
+                .orElse(new ProfesionalEntity(null, profesional.getUsuarioId(), profesional.getEspecialidad(),  profesional.getHorarioTrabajo(), profesional.getTarifa()));
         ProfesionalEntity guardada = profesionalJpaRepository.save(entity);
         return toDomain(guardada);
     }
@@ -40,6 +41,6 @@ public class ProfesionalRepositoryAdapter implements ProfesionalRepositoryPort {
     }
 
     private Profesional toDomain(ProfesionalEntity entity) {
-        return new Profesional(entity.getUsuarioId(), entity.getEspecialidad(), entity.getHorarioTrabajo());
+        return new Profesional(entity.getUsuarioId(), entity.getEspecialidad(), entity.getHorarioTrabajo(), entity.getTarifa());
     }
 }

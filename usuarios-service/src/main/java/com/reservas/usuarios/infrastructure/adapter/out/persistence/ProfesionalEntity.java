@@ -2,6 +2,8 @@ package com.reservas.usuarios.infrastructure.adapter.out.persistence;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "profesionales")
 public class ProfesionalEntity {
@@ -19,14 +21,18 @@ public class ProfesionalEntity {
     @Column(name = "horario_trabajo")
     private String horarioTrabajo;
 
+    @Column (precision = 10, scale = 2)
+    private BigDecimal tarifa;
+
     public ProfesionalEntity() {
     }
 
-    public ProfesionalEntity(Long id, Long usuarioId, String especialidad, String horarioTrabajo) {
+    public ProfesionalEntity(Long id, Long usuarioId, String especialidad, String horarioTrabajo, BigDecimal tarifa) {
         this.id = id;
         this.usuarioId = usuarioId;
         this.especialidad = especialidad;
         this.horarioTrabajo = horarioTrabajo;
+        this.tarifa = BigDecimal.ZERO;
     }
 
     public Long getId() { return id; }
@@ -37,4 +43,6 @@ public class ProfesionalEntity {
     public void setEspecialidad(String especialidad) { this.especialidad = especialidad; }
     public String getHorarioTrabajo() { return horarioTrabajo; }
     public void setHorarioTrabajo(String horarioTrabajo) { this.horarioTrabajo = horarioTrabajo; }
+    public BigDecimal getTarifa() {return tarifa;}
+    public void setTarifa(BigDecimal tarifa) {this.tarifa = tarifa;}
 }

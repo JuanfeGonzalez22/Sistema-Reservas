@@ -22,7 +22,7 @@ public class ProfesionalController {
     @PostMapping
     public ResponseEntity<ProfesionalDTO.ProfesionalPerfilResponse> crearPerfil(@Valid @RequestBody ProfesionalDTO.ProfesionalPerfilRequest request, @AuthenticationPrincipal Jwt jwt){
         Long usuarioId = jwt.getClaim("id"); // abre el token valido y extrae el dato
-        Profesional profesional = profesionalUseCase.crearPerfil(usuarioId, request.especialidad(),  request.horarioTrabajo());
+        Profesional profesional = profesionalUseCase.crearPerfil(usuarioId, request.especialidad(), request.horarioTrabajo(), request.tarifa());
         return ResponseEntity.ok(toResponse(profesional));
     }
 
@@ -33,15 +33,20 @@ public class ProfesionalController {
         return ResponseEntity.ok(toResponse(profesional));
     }
 
+    @GetMapping("/{usuarioId}")
+    public ProfesionalDTO.ProfesionalPerfilResponse obtenerPorUsuarioId(@PathVariable Long usuarioId){
+        return toResponse(profesionalUseCase.obtenerPerfil(usuarioId));
+    }
+
     @PutMapping("/me")
     public ResponseEntity<ProfesionalDTO.ProfesionalPerfilResponse> actualizarPerfil(@Valid @RequestBody ProfesionalDTO.ProfesionalPerfilRequest request, @AuthenticationPrincipal Jwt jwt){
         Long usuarioId = jwt.getClaim("id");
-        Profesional profesional = profesionalUseCase.actualizarPerfil(usuarioId, request.especialidad(),  request.horarioTrabajo());
+        Profesional profesional = profesionalUseCase.actualizarPerfil(usuarioId, request.especialidad(),  request.horarioTrabajo(), request.tarifa());
         return ResponseEntity.ok(toResponse(profesional));
     }
 
     private ProfesionalDTO.ProfesionalPerfilResponse toResponse(Profesional profesional){
-        return new ProfesionalDTO.ProfesionalPerfilResponse(profesional.getUsuarioId(), profesional.getEspecialidad(),  profesional.getHorarioTrabajo());
+        return new ProfesionalDTO.ProfesionalPerfilResponse(profesional.getUsuarioId(), profesional.getEspecialidad(),  profesional.getHorarioTrabajo(), profesional.getTarifa());
     }
 
 }

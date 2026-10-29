@@ -1,16 +1,21 @@
 package com.reservas.usuarios.domain.model;
 
 
+import java.math.BigDecimal;
+
 public class Profesional {
 
     private Long usuarioId;
     private String especialidad;
     private String horarioTrabajo;
+    private BigDecimal tarifa;
 
-    public Profesional(Long usuarioId, String especialidad, String horarioTrabajo){
+    public Profesional(Long usuarioId, String especialidad, String horarioTrabajo, BigDecimal tarifa) {
         this.usuarioId = usuarioId;
         this.especialidad = especialidad;
         this.horarioTrabajo = horarioTrabajo;
+        this.tarifa = tarifa;
+
     }
 
     public Long getUsuarioId() {
@@ -36,4 +41,8 @@ public class Profesional {
     public void setHorarioTrabajo(String horarioTrabajo) {
         this.horarioTrabajo = horarioTrabajo;
     }
+
+    public BigDecimal getTarifa() {return tarifa;}
+
+    public void setTarifa(BigDecimal tarifa) {this.tarifa = tarifa;}
 }

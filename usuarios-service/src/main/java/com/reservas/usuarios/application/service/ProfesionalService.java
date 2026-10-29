@@ -1,9 +1,12 @@
 package com.reservas.usuarios.application.service;
 
+import com.reservas.usuarios.domain.exception.ProfesionalNoEncontradoException;
 import com.reservas.usuarios.domain.model.Profesional;
 import com.reservas.usuarios.domain.port.in.ProfesionalUseCase;
 import com.reservas.usuarios.domain.port.out.ProfesionalRepositoryPort;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 @Service
 public class ProfesionalService  implements ProfesionalUseCase {
@@ -15,25 +18,26 @@ public class ProfesionalService  implements ProfesionalUseCase {
     }
 
     @Override
-    public Profesional crearPerfil(Long usuarioId, String especialidad, String horarioTrabajo) {
+    public Profesional crearPerfil(Long usuarioId, String especialidad, String horarioTrabajo, BigDecimal tarifa) {
         if (profesionalRepositoryPort.existePorId(usuarioId)) {
-            throw new RuntimeException("Profesional ya existe");
+            throw new ProfesionalNoEncontradoException(usuarioId);
         }
-        Profesional profesional = new Profesional(usuarioId, especialidad, horarioTrabajo);
+        Profesional profesional = new Profesional(usuarioId, especialidad, horarioTrabajo,tarifa );
         return profesionalRepositoryPort.guardar(profesional);
     }
 
     @Override
     public Profesional obtenerPerfil(Long usuarioId) {
         return profesionalRepositoryPort.buscarPorId(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Profesional no encontrado"));
+                .orElseThrow(() -> new ProfesionalNoEncontradoException(usuarioId));
     }
 
     @Override
-    public Profesional actualizarPerfil(Long usuarioId, String especialidad, String horarioTrabajo) {
+    public Profesional actualizarPerfil(Long usuarioId, String especialidad, String horarioTrabajo, BigDecimal tarifa) {
         Profesional profesional = obtenerPerfil(usuarioId);
         profesional.setEspecialidad(especialidad);
         profesional.setHorarioTrabajo(horarioTrabajo);
+        profesional.setTarifa(tarifa);
         return profesionalRepositoryPort.guardar(profesional);
     }
 }
