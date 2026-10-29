@@ -4,6 +4,7 @@ import com.reservas.reservas.domain.model.Reserva;
 import com.reservas.reservas.domain.port.in.ReservaUseCase;
 import com.reservas.reservas.infrastructure.adapter.in.rest.dto.ReservaDTO.CrearReservaRequest;
 import com.reservas.reservas.infrastructure.adapter.in.rest.dto.ReservaDTO.ReservaResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -24,7 +25,7 @@ public class ReservaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ReservaResponse crear(@AuthenticationPrincipal Jwt jwt, @RequestBody CrearReservaRequest request) {
+    public ReservaResponse crear(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody CrearReservaRequest request) {
 
         Long clienteId = ((Number) jwt.getClaims().get("id")).longValue();
 
@@ -65,7 +66,7 @@ public class ReservaController {
         return toResponse(reservaUseCase.confirmarReserva(id, usuarioId));
     }
 
-    @PatchMapping("{id}/cancelar")
+    @PatchMapping("/{id}/cancelar")
     public ReservaResponse cancelarReserva(@PathVariable Long id, @AuthenticationPrincipal Jwt jwt){
         Long usuarioId = ((Number) jwt.getClaims().get("id")).longValue();
         return toResponse(reservaUseCase.cancelarReserva(id, usuarioId));

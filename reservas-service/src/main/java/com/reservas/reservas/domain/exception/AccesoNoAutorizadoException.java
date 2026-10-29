@@ -1,4 +1,4 @@
-package com.reservas.reservas.domain.model;
+package com.reservas.reservas.domain.exception;
 
 public class AccesoNoAutorizadoException extends RuntimeException{
 

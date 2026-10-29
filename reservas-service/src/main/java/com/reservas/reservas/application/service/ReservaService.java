@@ -1,10 +1,13 @@
 package com.reservas.reservas.application.service;
 
-import com.reservas.reservas.domain.ReservaNoEncontradaException;
-import com.reservas.reservas.domain.model.AccesoNoAutorizadoException;
+import com.reservas.reservas.domain.exception.ReservaNoEncontradaException;
+import com.reservas.reservas.domain.exception.AccesoNoAutorizadoException;
+import com.reservas.reservas.domain.exception.ProfesionalNoEncontradoException;
 import com.reservas.reservas.domain.model.EstadoReserva;
+import com.reservas.reservas.domain.model.ProfesionalInfo;
 import com.reservas.reservas.domain.model.Reserva;
 import com.reservas.reservas.domain.port.in.ReservaUseCase;
+import com.reservas.reservas.domain.port.out.ProfesionalConsultaPort;
 import com.reservas.reservas.domain.port.out.ReservaRepositoryPort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +20,11 @@ import java.util.List;
 public class ReservaService implements ReservaUseCase {
 
     private final ReservaRepositoryPort reservaRepositoryPort;
+    private final ProfesionalConsultaPort profesionalConsultaPort;
 
-    public ReservaService(ReservaRepositoryPort reservaRepositoryPort) {
+    public ReservaService(ReservaRepositoryPort reservaRepositoryPort, ProfesionalConsultaPort profesionalConsultaPort) {
         this.reservaRepositoryPort = reservaRepositoryPort;
+        this.profesionalConsultaPort = profesionalConsultaPort;
     }
 
     @Override
@@ -32,13 +37,16 @@ public class ReservaService implements ReservaUseCase {
             throw new IllegalArgumentException("No se puede reservar en el pasado");
         }
 
+        ProfesionalInfo profesional = profesionalConsultaPort.consultaPorId(profesionalId)
+                .orElseThrow(() -> new ProfesionalNoEncontradoException(profesionalId));
+
         reservaRepositoryPort.bloquearAgenda(profesionalId);
 
         if(reservaRepositoryPort.existeSolapamiento(profesionalId, fechaHoraInicio, fechaHoraFin)){
             throw new IllegalArgumentException("Horario no disponible para este profesional");
         }
 
-        Reserva reserva = new Reserva(clienteId, profesionalId, fechaHoraInicio, fechaHoraFin, notas, null );
+        Reserva reserva = new Reserva(clienteId, profesionalId, fechaHoraInicio, fechaHoraFin, notas, profesional.getTarifa());
         return reservaRepositoryPort.guardar(reserva);
     }
 
