@@ -20,13 +20,13 @@ public interface ReservaJpaRepository extends JpaRepository<ReservaEntity, Long>
     @Query("""
            SELECT COUNT(r) > 0 FROM ReservaEntity r
            WHERE r.profesionalId = :profesionalId
-             AND r.estado <> :estadoExcluido
+             AND r.estado NOT IN :estadosExcluidos
              AND r.fechaHoraInicio < :fechaHoraFin
              AND r.fechaHoraFin > :fechaHoraInicio
            """)
     boolean existeSolapamiento(@Param("profesionalId") Long profesionalId,
                                @Param("fechaHoraInicio") LocalDateTime fechaHoraInicio,
                                @Param("fechaHoraFin") LocalDateTime fechaHoraFin,
-                               @Param("estadoExcluido") EstadoReserva estadoExcluido);
+                               @Param("estadoExcluido") List<EstadoReserva> estadosExcluidos);
 
 }

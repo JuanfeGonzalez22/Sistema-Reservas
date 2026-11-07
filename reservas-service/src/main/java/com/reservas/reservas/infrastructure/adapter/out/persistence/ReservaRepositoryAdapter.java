@@ -32,7 +32,7 @@ public class ReservaRepositoryAdapter implements ReservaRepositoryPort {
 
     @Override
     public boolean existeSolapamiento(Long profesionalId, LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin) {
-        return reservaJpaRepository.existeSolapamiento(profesionalId, fechaHoraInicio, fechaHoraFin, EstadoReserva.CANCELADA);
+        return reservaJpaRepository.existeSolapamiento(profesionalId, fechaHoraInicio, fechaHoraFin, List.of(EstadoReserva.CANCELADA, EstadoReserva.RECHAZADA));
     }
 
     @Override
