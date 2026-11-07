@@ -1,4 +1,6 @@
 package com.reservas.pagos.domain.model;
 
-public class EstadoPago {
+public enum EstadoPago {
+    APROBADO,
+    RECHAZADO,
 }

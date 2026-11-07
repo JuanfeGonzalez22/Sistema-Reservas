@@ -1,4 +1,11 @@
-package com.reservas.pagos.domain.port.in;
+package com.reservas.pagos.domain.port.out;
 
-public class PasarelaPagoPort {
+import com.reservas.pagos.domain.model.ResultadoCobro;
+
+import java.math.BigDecimal;
+
+public interface PasarelaPagoPort {
+
+    ResultadoCobro cobrar(BigDecimal monto);
+
 }
