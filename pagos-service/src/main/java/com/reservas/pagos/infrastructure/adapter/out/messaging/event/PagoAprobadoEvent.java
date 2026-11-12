@@ -1,4 +1,4 @@
 package com.reservas.pagos.infrastructure.adapter.out.messaging.event;
 
-public class PagoAprobadoEvent {
+public record PagoAprobadoEvent(Long reservaId, Long pagoId){
 }
