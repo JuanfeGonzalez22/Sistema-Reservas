@@ -7,6 +7,7 @@ import com.reservas.reservas.domain.model.EstadoReserva;
 import com.reservas.reservas.domain.model.ProfesionalInfo;
 import com.reservas.reservas.domain.model.Reserva;
 import com.reservas.reservas.domain.port.in.ReservaUseCase;
+import com.reservas.reservas.domain.port.out.EventoPublisherPort;
 import com.reservas.reservas.domain.port.out.ProfesionalConsultaPort;
 import com.reservas.reservas.domain.port.out.ReservaRepositoryPort;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,12 @@ public class ReservaService implements ReservaUseCase {
 
     private final ReservaRepositoryPort reservaRepositoryPort;
     private final ProfesionalConsultaPort profesionalConsultaPort;
+    private final EventoPublisherPort eventoPublisherPort;
 
-    public ReservaService(ReservaRepositoryPort reservaRepositoryPort, ProfesionalConsultaPort profesionalConsultaPort) {
+    public ReservaService(ReservaRepositoryPort reservaRepositoryPort, ProfesionalConsultaPort profesionalConsultaPort, EventoPublisherPort eventoPublisherPort) {
         this.reservaRepositoryPort = reservaRepositoryPort;
         this.profesionalConsultaPort = profesionalConsultaPort;
+        this.eventoPublisherPort = eventoPublisherPort;
     }
 
     @Override
@@ -46,8 +49,15 @@ public class ReservaService implements ReservaUseCase {
             throw new IllegalArgumentException("Horario no disponible para este profesional");
         }
 
-        Reserva reserva = new Reserva(clienteId, profesionalId, fechaHoraInicio, fechaHoraFin, notas, profesional.getTarifa());
-        return reservaRepositoryPort.guardar(reserva);
+        Reserva guardada = new Reserva(clienteId, profesionalId, fechaHoraInicio, fechaHoraFin, notas, profesional.getTarifa());
+
+        eventoPublisherPort.publicarReservaCreada(
+                guardada.getId(),
+                guardada.getClienteId(),
+                guardada.getPrecio()
+        );
+
+        return guardada;
     }
 
     @Override
