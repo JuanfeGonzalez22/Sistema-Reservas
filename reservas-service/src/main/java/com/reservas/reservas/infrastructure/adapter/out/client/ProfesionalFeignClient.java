@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "usuarios-service", url = "${app.usuarios-service.url}")
 public interface ProfesionalFeignClient {
 
-    @GetMapping("/api/profesionales/{usuarioId}")
+    @GetMapping("/api/v1/profesionales/{usuarioId}")
     ProfesionalClientResponse obtenerPorUsuarioId(@PathVariable("usuarioId") Long usuarioId);
 }
