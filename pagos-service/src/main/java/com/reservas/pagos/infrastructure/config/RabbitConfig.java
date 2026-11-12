@@ -28,7 +28,7 @@ public class RabbitConfig {
 
     @Bean
     public Queue queueReservaCreada() {
-        return new Queue(RK_RESERVA_CREADA, true);
+        return new Queue(QUEUE_RESERVA_CREADA, true);
     }
 
     @Bean
@@ -40,7 +40,7 @@ public class RabbitConfig {
     }
 
     @Bean
-    public MessageConverter jasoMessageConverter() {
+    public MessageConverter jsonMessageConverter() {
         return new JacksonJsonMessageConverter();
     }
 
