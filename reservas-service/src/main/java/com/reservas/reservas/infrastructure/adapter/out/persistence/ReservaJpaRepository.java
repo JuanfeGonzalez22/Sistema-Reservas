@@ -27,6 +27,6 @@ public interface ReservaJpaRepository extends JpaRepository<ReservaEntity, Long>
     boolean existeSolapamiento(@Param("profesionalId") Long profesionalId,
                                @Param("fechaHoraInicio") LocalDateTime fechaHoraInicio,
                                @Param("fechaHoraFin") LocalDateTime fechaHoraFin,
-                               @Param("estadoExcluido") List<EstadoReserva> estadosExcluidos);
+                               @Param("estadosExcluidos") List<EstadoReserva> estadosExcluidos);
 
 }

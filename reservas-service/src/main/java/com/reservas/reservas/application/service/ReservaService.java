@@ -49,7 +49,9 @@ public class ReservaService implements ReservaUseCase {
             throw new IllegalArgumentException("Horario no disponible para este profesional");
         }
 
-        Reserva guardada = new Reserva(clienteId, profesionalId, fechaHoraInicio, fechaHoraFin, notas, profesional.getTarifa());
+        Reserva reserva = new Reserva(clienteId, profesionalId, fechaHoraInicio, fechaHoraFin, notas, profesional.getTarifa());
+
+        Reserva guardada = reservaRepositoryPort.guardar(reserva);
 
         eventoPublisherPort.publicarReservaCreada(
                 guardada.getId(),
